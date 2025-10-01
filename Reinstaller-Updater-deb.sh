@@ -11,9 +11,8 @@ if [ "$EUID" -ne 0 ]; then
 fi
 
 
-# Updating the system and installing the necessary packages
+# Updating the system 
 apt update && apt upgrade -y
-apt install -y lm-sensors python3 curl git
 
 # Download the files from the GitHub repository
 git clone https://github.com/Korbinian0/L-fterregelung-HP-ProLaint-Server-G9.git
