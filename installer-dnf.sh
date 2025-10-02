@@ -20,8 +20,11 @@ git clone https://github.com/Korbinian0/Luefterregelung-HP-ProLaint-Server-G9.gi
 cd L-fterregelung-HP-ProLaint-Server-G9
 
 # Move the reinstaller-update.sh script to /root/ and make it executable
-cp reinstaller-update-dnf.sh /root/reinstaller-update-dnf.sh
-chmod +x /root/reinstaller-update-dnf.sh
+mkdir -p /root/autofan
+cp autofan-test.py /root/autofan/autofan-test.py
+cp reinstaller-update-dnf.sh /root/autofan/reinstaller-update-dnf.sh
+chmod +x /root/autofan/reinstaller-update-dnf.sh
+chmod +x /root/autofan/autofan-test.py
 
 # Move the autofan.py script to /usr/local/autofan and make it executable
 mkdir -p /usr/local/autofan
@@ -37,9 +40,13 @@ read -p "Please enter SSH options (leave blank for default): " SSHOPTS
 
 # Replace placeholders in autofan.py
 sed -i "s/^USERNAME=.*/USERNAME=\"$USERNAME\"/" /usr/local/autofan/autofan.py
+sed -i "s/^USERNAME=.*/USERNAME=\"$USERNAME\"/" /root/autofan/autofan-test.py
 sed -i "s/^PASSWORD=.*/PASSWORD=\"$PASSWORD\"/" /usr/local/autofan/autofan.py
+sed -i "s/^PASSWORD=.*/PASSWORD=\"$PASSWORD\"/" /root/autofan/autofan-test.py
 sed -i "s/^ILOIP=.*/ILOIP=\"$ILOIP\"/" /usr/local/autofan/autofan.py
+sed -i "s/^ILOIP=.*/ILOIP=\"$ILOIP\"/" /root/autofan/autofan-test.py
 sed -i "s/^SSHOPTS=.*/SSHOPTS=\"$SSHOPTS\"/" /usr/local/autofan/autofan.py
+sed -i "s/^SSHOPTS=.*/SSHOPTS=\"$SSHOPTS\"/" /root/autofan/autofan-test.py
 
 # Create a systemd service file for the autofan script
 cat <<EOL > /etc/systemd/system/autofan.service
@@ -77,4 +84,8 @@ echo "Installation complete. The autofan service is now running."
 echo "You can check the service status with: systemctl status autofan.service"
 echo "Log output can be viewed with: journalctl -u autofan.service -f"
 echo "Configuration file is located at: /usr/local/autofan/"
+echo "To update the script in the future, run: /root/autofan/reinstaller-update-dnf.sh"
+echo "Please reboot the server to ensure all changes take effect."
+echo "Test the script first with: python3 /root//autofan/autofan-test.py"
+echo "The test sets all fans slowly in 1 second intervals up and then down again and then the normal script intervenes again and regulates the fans."
 # End of installer script
