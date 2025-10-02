@@ -15,7 +15,7 @@ fi
 dnf update -y
 
 # Download the files from the GitHub repository
-git clone https://github.com/Korbinian0/L-fterregelung-HP-ProLaint-Server-G9.git
+git clone https://github.com/Korbinian0/Luefterregelung-HP-ProLaint-Server-G9.git
 cd L-fterregelung-HP-ProLaint-Server-G9
 
 # Move the autofan.py script to /usr/local/autofan and make it executable
