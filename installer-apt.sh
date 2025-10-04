@@ -79,8 +79,10 @@ chmod 600 /usr/local/autofan/*
 cd ..
 rm -rf L-fterregelung-HP-ProLaint-Server-G9
 
-# Testing Start
-./root/autofan/autofan-test.py
+# Fan Testing 
+echo "Starting fan test..."
+python3 /root/autofan/autofan-test.py
+echo "Fan test completed."
 
 # Final message
 echo "Installation complete. The autofan service is now running."
