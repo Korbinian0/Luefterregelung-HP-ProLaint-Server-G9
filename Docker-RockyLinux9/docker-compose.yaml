@@ -1,1 +1,20 @@
+## docker-compose from https://hub.docker.com/_/rockylinux as of October 8, 2025
+###########################################################################################
+## Modifiert Korbinian Musch
+## Oktober 2025 / Au in der Hallertau
+## Fan control HP ProLaint Server G9 with modified ILO4 firmware
+###########################################################################################
 
+version: '3.8'
+
+services:
+  rockyfan:
+    build: .
+    container_name: rockyfan_container
+    ports:
+      - "2222:22"
+    restart: always
+    tty: true
+    devices:
+      - /dev/ipmi0:/dev/ipmi0   # if IPMI is needed
+    network_mode: host          # direct network access
