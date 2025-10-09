@@ -12,11 +12,11 @@ fi
 
 
 # Updating the system 
-dnf update -y
+apt update && apt upgrade -y
 
 # Download the files from the GitHub repository
 git clone https://github.com/Korbinian0/Luefterregelung-HP-ProLaint-Server-G9.git
-cd L-fterregelung-HP-ProLaint-Server-G9
+cd Luefterregelung-HP-ProLaint-Server-G9
 
 # Move the autofan.py script to /usr/local/autofan and make it executable
 mkdir -p /usr/local/autofan
@@ -80,7 +80,7 @@ chmod 600 /usr/local/autofan/*
 
 # Clean up
 cd ..
-rm -rf L-fterregelung-HP-ProLaint-Server-G9
+rm -rf Luefterregelung-HP-ProLaint-Server-G9
 
 # Fan Testing 
 echo "Starting fan test..."

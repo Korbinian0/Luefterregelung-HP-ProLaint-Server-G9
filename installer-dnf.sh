@@ -2,7 +2,7 @@
 ## Oktober 2025 / Au in der Hallertau
 ## Fan control HP ProLaint Server G9 with modified ILO4 firmware
 ## This script installs the autofan.py script and sets it up as a systemd service on a Fedora-based system.
-###################
+#################################################################################################################
 #!/bin/bash
 
 # Ensure the script is run as root
@@ -17,7 +17,7 @@ dnf install -y lm-sensors python3 curl git sshpass
 
 # Download the files from the GitHub repository
 git clone https://github.com/Korbinian0/Luefterregelung-HP-ProLaint-Server-G9.git
-cd L-fterregelung-HP-ProLaint-Server-G9
+cd Luefterregelung-HP-ProLaint-Server-G9
 
 # Move the reinstaller-update.sh script to /root/ and make it executable
 mkdir -p /root/autofan
@@ -31,22 +31,57 @@ mkdir -p /usr/local/autofan
 cp autofan.py /usr/local/autofan/autofan.py
 chmod +x /usr/local/autofan/autofan.py
 
-# Prompt for access data
+# Prompt for access data and IPMI settings
 read -p "Please enter iLO username: " USERNAME
 read -sp "Please enter iLO password: " PASSWORD
 echo
 read -p "Please enter iLO IP address: " ILOIP
 read -p "Please enter SSH options (leave blank for default): " SSHOPTS
+echo
+read -p "Please enter IPMI Username: " IPMIUSER
+read -sp "Please enter IPMI Passwost: " IPMIPW
+echo
+read -p "Please set the IPMI Chipset name (default: '10-Chipset'): "
+read -p "Please set the IPMI HD Max name (default: '10-HD Max'): "
+read -p "Please set the IPMI HD Controller name (default: '10-HD Controller'): "
+read -p "Please set the IPMI ILO Zone name (default: '10-ILO Zone'): "
+read -p "Please set the IPMI Battery Zone name (default: '10-Battery Zone'): "
+read -p "Please set the IPMI PS2 Inlet name (default: '10-PS2 Inlet'): "
+read -p "Please set the IPMI PS1 Inlet name (default: '10-PS1 Inlet'): "
+read -p "Please set the IPMI PS1 Internal name (default: '10-PS1 Internal'): "
+read -p "Please set the IPMI PS2 Internal name (default: '10-PS2 Internal'): "
+read -p "Please set the IPMI VRP1 name (default: '10-VRP1'): "
+read -p "Please set the IPMI VRP2 name (default: '10-VRP2'): "
+read -p "Please set the IPMI Storage Batt name (default: '10-Storage Batt'): "
+echo
 
-# Replace placeholders in autofan.py
+# Replace placeholders in autofan.py and autofan-test.py
 sed -i "s/^USERNAME=.*/USERNAME=\"$USERNAME\"/" /usr/local/autofan/autofan.py
-sed -i "s/^USERNAME=.*/USERNAME=\"$USERNAME\"/" /root/autofan/autofan-test.py
+sed -i "s/^USERNAME=.*/USERNAME=\"$USERNAME\"/" /root/autofan-test.py
 sed -i "s/^PASSWORD=.*/PASSWORD=\"$PASSWORD\"/" /usr/local/autofan/autofan.py
-sed -i "s/^PASSWORD=.*/PASSWORD=\"$PASSWORD\"/" /root/autofan/autofan-test.py
+sed -i "s/^PASSWORD=.*/PASSWORD=\"$PASSWORD\"/" /root/autofan-test.py
 sed -i "s/^ILOIP=.*/ILOIP=\"$ILOIP\"/" /usr/local/autofan/autofan.py
-sed -i "s/^ILOIP=.*/ILOIP=\"$ILOIP\"/" /root/autofan/autofan-test.py
+sed -i "s/^ILOIP=.*/ILOIP=\"$ILOIP\"/" /root/autofan-test.py
 sed -i "s/^SSHOPTS=.*/SSHOPTS=\"$SSHOPTS\"/" /usr/local/autofan/autofan.py
-sed -i "s/^SSHOPTS=.*/SSHOPTS=\"$SSHOPTS\"/" /root/autofan/autofan-test.py
+sed -i "s/^SSHOPTS=.*/SSHOPTS=\"$SSHOPTS\"/" /root/autofan-test.py
+sed -i "s/^IPMIUSER=.*/IPMIUSER=\"$IPMIUSER\"/" /usr/local/autofan/autofan.py
+sed -i "s/^IPMIPW=.*/IPMIPW=\"$IPMIPW\"/" /usr/local/autofan/autofan.py
+sed -i "s/^Chipset=.*/Chipset=\"${Chipset:-10-Chipset}\"/" /usr/local/autofan/autofan.py
+sed -i "s/^HDMax=.*/HDMax=\"${HDMax:-10-HD Max}\"/" /usr/local/autofan/autofan.py
+sed -i "s/^HDController=.*/HDController=\"${HDController:-10-HD Controller}\"/" /usr/local/autofan/autofan.py
+sed -i "s/^ILOZone=.*/ILOZone=\"${ILOZone:-10-ILO Zone}\"/" /usr/local/autofan/autofan.py
+sed -i "s/^Batteryzone=.*/Batteryzone=\"${Batteryzone:-10-Battery Zone}\"/" /usr/local/autofan/autofan.py
+sed -i "s/^PS2Inlet=.*/PS2Inlet=\"${PS2Inlet:-10-PS2 Inlet}\"/" /usr/local/autofan/autofan.py
+sed -i "s/^PS1Inlet=.*/PS1Inlet=\"${PS1Inlet:-10-PS1 Inlet}\"/" /usr/local/autofan/autofan.py
+sed -i "s/^PS1Internal=.*/PS1Internal=\"${PS1Internal:-10-PS1 Internal}\"/" /usr/local/autofan/autofan.py
+sed -i "s/^PS2Internal=.*/PS2Internal=\"${PS2Internal:-10-PS2 Internal}\"/" /usr/local/autofan/autofan.py
+sed -i "s/^VRP1=.*/VRP1=\"${VRP1:-10-VRP1}\"/" /usr/local/autofan/autofan.py
+sed -i "s/^VRP2=.*/VRP2=\"${VRP2:-10-VRP2}\"/" /usr/local/autofan/autofan.py
+sed -i "s/^StorageBatt=.*/StorageBatt=\"${StorageBatt:-10-Storage Batt}\"/" /usr/local/autofan/autofan.py
+
+#IPMI Test
+ipmitool -I lanplus -H "$ILOIP" -U "$IPMIUSER" -P "$IPMIPW" chassis status
+
 
 # Create a systemd service file for the autofan script
 cat <<EOL > /etc/systemd/system/autofan.service
@@ -77,7 +112,7 @@ chmod 600 /usr/local/autofan/*
 
 # Clean up
 cd ..
-rm -rf L-fterregelung-HP-ProLaint-Server-G9
+rm -rf Luefterregelung-HP-ProLaint-Server-G9
 
 # Fan Testing 
 echo "Starting fan test..."

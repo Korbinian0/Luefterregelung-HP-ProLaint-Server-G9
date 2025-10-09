@@ -1,7 +1,7 @@
 ## Creator Korbinian Musch
 ## Oktober 2025 / Au in der Hallertau
 ## Fan control HP ProLaint Server G9 with modified ILO4 firmware
-###################
+#################################################################################################################
 
 # Import libraries
 import subprocess
@@ -12,6 +12,8 @@ import time
 PASSWORD="PASSWORT"
 USERNAME="USERNAME"
 ILOIP="XXX.XXX.XXX.XXX"
+IPMIUSER="USERNAME"
+IPMIPW="PASSWORT"
 # Encryption routine for SSH connection
 SSHOPTS="SSHOPTS"
 
