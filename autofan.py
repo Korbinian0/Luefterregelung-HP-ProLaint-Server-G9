@@ -23,10 +23,6 @@ HDMax="XX-HD Max"
 HDController="XX-HD Controller"
 ILOZone="XX-ILO Zone"
 Batteryzone="XX-Battery Zone"
-PS2Inlet="XX-PS2 Inlet"
-PS1Inlet="XX-PS1 Inlet"
-PS1Internal="XX-PS1 Internal"
-PS2Internal="XX-PS2 Internal"
 VRP1="XX-VRP1"
 VRP2="XX-VRP2"
 StorageBatt="XX-Storage Batt"
@@ -119,10 +115,6 @@ if temperatures:
         'HDController': 'HD_Controller_TEMP',
         'ILOZone': 'ILO_Zone_TEMP',
         'Batteryzone': 'Battery_Zone_TEMP',
-        'PS2Inlet': 'PS2_Inlet_TEMP',
-        'PS1Inlet': 'PS1_Inlet_TEMP',
-        'PS1Internal': 'PS1_Internal_TEMP',
-        'PS2Internal': 'PS2_Internal_TEMP',
         'VRP1': 'VRP1_TEMP',
         'VRP2': 'VRP2_TEMP',
         'StorageBatt': 'Storage_Batt_TEMP',
@@ -141,16 +133,12 @@ else:
     print("Keine Sensordaten gefunden.")
 
 # Set Temp in Variabl
-if all(sensor in globals() for sensor in ['Chipset_TEMP', 'HD_Max_TEMP', 'ILO_Zone_TEMP', 'Battery_Zone_TEMP', 'PS2_Inlet_TEMP', 'PS1_Inlet_TEMP', 'PS1_Internal_TEMP', 'PS2_Internal_TEMP', 'VRP1_TEMP', 'VRP2_TEMP', 'Storage_Batt_TEMP', 'HD_Cntlr_Zone']):
+if all(sensor in globals() for sensor in ['Chipset_TEMP', 'HD_Max_TEMP', 'ILO_Zone_TEMP', 'Battery_Zone_TEMP', 'VRP1_TEMP', 'VRP2_TEMP', 'Storage_Batt_TEMP', 'HD_Cntlr_Zone']):
     chipset_temp = globals()['Chipset_TEMP']
     hdmax_temp = globals()['HD_Max_TEMP']
     HDController_temp = globals()['HD_Controller_TEMP']
     ilozone_temp = globals()['ILO_Zone_TEMP']
     Batteryzone_temp = globals()['Batter_Zonr_TEMP']
-    PS2Inlet_temp = globals()['PS2_Inlet_TEMP']
-    PS1Inlet_temp = globals()['PS1_Inlet_TEMP']
-    PS1Internal_temp = globals()['PS1_Internal_TEMP']
-    PS2Internal_temp = globals()['PS2_Internal_TEMP']
     VRP1_temp = globals()['VRP1_TEMP']
     VRP2_temp = globals()['VRP2_TEMP']
     StorageBatt_temp = ()['Storage_Batt_TEMP']
@@ -164,29 +152,11 @@ print=("HD Max", ":", HDMax, "°C")                      #HD Max Temp print
 print=("HD Controller", ":", HDController, "°C")        #HD Controller Temp print
 print=("ILO Zone", ":", ILOZone, "°C")                  #ILO Zone Temp print
 print=("Battery Zone", ":", Batteryzone, "°C")          #Battery Zone Temp print
-print=("PS2 Inlet", ":", PS2Inlet, "°C")                #PS2 Inlet Temp print
-print=("PS1 Inlet", ":", PS1Inlet, "°C")                #PS1 Inlet Temp print
-print=("PS1 Internal", ":", PS1Internal, "°C")          #PS1 Internal Temp print
-print=("PS2 Internal", ":", PS2Internal, "°C")          #PS2 Internal Temp print
 print=("VRP1", ":", VRP1, "°C")                         #VRP1 Temp print
 print=("VRP2", ":", VRP2, "°C")                         #VRP2 Temp print
 print=("Storage Batt", ":", StorageBatt, "°C")          #Storage Batt Temp print
 print=("HD Cntlr Zone", ":", HDCntlrZone, "°C")         #HD Cntlr Zone Temp print
 
-# Create Temp Group from IPMI Senosors
-# Group PS2_Temp
-if PS1Inlet_temp > PS1Internal_temp:
-    PS1_temp = PS1Inlet_temp
-
-else:
-    PS1temp = PS1Internal_temp
-
-# Group PS2_Temp
-if PS2Inlet_temp > PS2Internal_temp:
-    PS2_temp = PS2Inlet_temp 
-
-else:
-    PS2_temp = PS2Internal_temp
 
 # If the temperature of CPU 2 cannot be read, it is set to half the temperature of CPU 1
 if temp_2 is None and temp_1 is not None:
@@ -626,128 +596,6 @@ elif Batteryzone_temp is not None and temp_1 is not None and Batteryzone_temp >=
 
 else:
     for i in range(2, 4):
-        cmd = f"ssshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan ü {i} max {FANSPEED_00}'"
-        subprocess.call(cmd, shell=True)
-
-# Additional cooling if PS1 temperature is too high and CPU 1 temperature is low
-if PS1_temp is not None and temp_1 is not None and PS1_temp >= TEMP_11 and temp_1 <= TEMP_11:
-    for i in range(1, 4):
-        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_11}'"
-        subprocess.call(cmd, shell=True)
-
-elif PS1_temp is not None and temp_1 is not None and PS1_temp >= TEMP_10 and temp_1 <= TEMP_10:
-    for i in range(1, 4):
-        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_10}'"
-        subprocess.call(cmd, shell=True)
-
-elif PS1_temp is not None and temp_1 is not None and PS1_temp >= TEMP_09 and temp_1 <= TEMP_09:
-    for i in range(1, 4):
-        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_09}'"
-        subprocess.call(cmd, shell=True)
-
-elif PS1_temp is not None and temp_1 is not None and PS1_temp >= TEMP_08 and temp_1 <= TEMP_08:
-    for i in range(1, 4):
-        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_08}'"
-        subprocess.call(cmd, shell=True)
-
-elif PS1_temp is not None and temp_1 is not None and PS1_temp >= TEMP_07 and temp_1 <= TEMP_07:
-    for i in range(1, 4):
-        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_07}'"
-        subprocess.call(cmd, shell=True)
-
-elif PS1_temp is not None and temp_1 is not None and PS1_temp >= TEMP_06 and temp_1 <= TEMP_06:
-    for i in range(1, 4):
-        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_06}'"
-        subprocess.call(cmd, shell=True)
-
-elif PS1_temp is not None and temp_1 is not None and PS1_temp >= TEMP_05 and temp_1 <= TEMP_05:
-    for i in range(1, 4):
-        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_05}'"
-        subprocess.call(cmd, shell=True)
-
-elif PS1_temp is not None and temp_1 is not None and PS1_temp >= TEMP_04 and temp_1 <= TEMP_04:
-    for i in range(1, 4):
-        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_04}'"
-        subprocess.call(cmd, shell=True)
-
-elif PS1_temp is not None and temp_1 is not None and PS1_temp >= TEMP_03 and temp_1 <= TEMP_03:
-    for i in range(1, 4):
-        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_03}'"
-        subprocess.call(cmd, shell=True)
-
-elif PS1_temp is not None and temp_1 is not None and PS1_temp >= TEMP_02 and temp_1 <= TEMP_02:
-    for i in range(1, 4):
-        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_02}'"
-        subprocess.call(cmd, shell=True)
-
-elif PS1_temp is not None and temp_1 is not None and PS1_temp >= TEMP_01 and temp_1 <= TEMP_01:
-    for i in range(1, 4):
-        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_01}'"
-        subprocess.call(cmd, shell=True)
-
-else:
-    for i in range(1, 4):
-        cmd = f"ssshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan ü {i} max {FANSPEED_00}'"
-        subprocess.call(cmd, shell=True)
-
-# Additional cooling if PS2 temperature is too high and CPU 1 temperature is low
-if PS2_temp is not None and temp_2 is not None and PS2_temp >= TEMP_11 and temp_2 <= TEMP_11:
-    for i in range(0, 4):
-        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_11}'"
-        subprocess.call(cmd, shell=True)
-
-elif PS2_temp is not None and temp_2 is not None and PS2_temp >= TEMP_10 and temp_2 <= TEMP_10:
-    for i in range(0, 4):
-        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_10}'"
-        subprocess.call(cmd, shell=True)
-
-elif PS2_temp is not None and temp_2 is not None and PS2_temp >= TEMP_09 and temp_2 <= TEMP_09:
-    for i in range(0, 4):
-        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_09}'"
-        subprocess.call(cmd, shell=True)
-
-elif PS2_temp is not None and temp_2 is not None and PS2_temp >= TEMP_08 and temp_2 <= TEMP_08:
-    for i in range(0, 4):
-        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_08}'"
-        subprocess.call(cmd, shell=True)
-
-elif PS2_temp is not None and temp_2 is not None and PS2_temp >= TEMP_07 and temp_2 <= TEMP_07:
-    for i in range(0, 4):
-        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_07}'"
-        subprocess.call(cmd, shell=True)
-
-elif PS2_temp is not None and temp_2 is not None and PS2_temp >= TEMP_06 and temp_2 <= TEMP_06:
-    for i in range(0, 4):
-        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_06}'"
-        subprocess.call(cmd, shell=True)
-
-elif PS2_temp is not None and temp_2 is not None and PS2_temp >= TEMP_05 and temp_2 <= TEMP_05:
-    for i in range(0, 4):
-        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_05}'"
-        subprocess.call(cmd, shell=True)
-
-elif PS2_temp is not None and temp_2 is not None and PS2_temp >= TEMP_04 and temp_2 <= TEMP_04:
-    for i in range(0, 4):
-        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_04}'"
-        subprocess.call(cmd, shell=True)
-
-elif PS2_temp is not None and temp_2 is not None and PS2_temp >= TEMP_03 and temp_2 <= TEMP_03:
-    for i in range(0, 4):
-        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_03}'"
-        subprocess.call(cmd, shell=True)
-
-elif PS2_temp is not None and temp_2 is not None and PS2_temp >= TEMP_02 and temp_2 <= TEMP_02:
-    for i in range(0, 4):
-        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_02}'"
-        subprocess.call(cmd, shell=True)
-
-elif PS2_temp is not None and temp_2 is not None and PS2_temp >= TEMP_01 and temp_2 <= TEMP_01:
-    for i in range(0, 4):
-        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_01}'"
-        subprocess.call(cmd, shell=True)
-
-else:
-    for i in range(0, 4):
         cmd = f"ssshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan ü {i} max {FANSPEED_00}'"
         subprocess.call(cmd, shell=True)
 
