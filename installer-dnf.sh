@@ -46,10 +46,6 @@ read -p "Please set the IPMI HD Max name (default: '10-HD Max'): "
 read -p "Please set the IPMI HD Controller name (default: '10-HD Controller'): "
 read -p "Please set the IPMI ILO Zone name (default: '10-ILO Zone'): "
 read -p "Please set the IPMI Battery Zone name (default: '10-Battery Zone'): "
-read -p "Please set the IPMI PS2 Inlet name (default: '10-PS2 Inlet'): "
-read -p "Please set the IPMI PS1 Inlet name (default: '10-PS1 Inlet'): "
-read -p "Please set the IPMI PS1 Internal name (default: '10-PS1 Internal'): "
-read -p "Please set the IPMI PS2 Internal name (default: '10-PS2 Internal'): "
 read -p "Please set the IPMI VRP1 name (default: '10-VRP1'): "
 read -p "Please set the IPMI VRP2 name (default: '10-VRP2'): "
 read -p "Please set the IPMI Storage Batt name (default: '10-Storage Batt'): "
@@ -71,13 +67,11 @@ sed -i "s/^HDMax=.*/HDMax=\"${HDMax:-10-HD Max}\"/" /usr/local/autofan/autofan.p
 sed -i "s/^HDController=.*/HDController=\"${HDController:-10-HD Controller}\"/" /usr/local/autofan/autofan.py
 sed -i "s/^ILOZone=.*/ILOZone=\"${ILOZone:-10-ILO Zone}\"/" /usr/local/autofan/autofan.py
 sed -i "s/^Batteryzone=.*/Batteryzone=\"${Batteryzone:-10-Battery Zone}\"/" /usr/local/autofan/autofan.py
-sed -i "s/^PS2Inlet=.*/PS2Inlet=\"${PS2Inlet:-10-PS2 Inlet}\"/" /usr/local/autofan/autofan.py
-sed -i "s/^PS1Inlet=.*/PS1Inlet=\"${PS1Inlet:-10-PS1 Inlet}\"/" /usr/local/autofan/autofan.py
-sed -i "s/^PS1Internal=.*/PS1Internal=\"${PS1Internal:-10-PS1 Internal}\"/" /usr/local/autofan/autofan.py
-sed -i "s/^PS2Internal=.*/PS2Internal=\"${PS2Internal:-10-PS2 Internal}\"/" /usr/local/autofan/autofan.py
 sed -i "s/^VRP1=.*/VRP1=\"${VRP1:-10-VRP1}\"/" /usr/local/autofan/autofan.py
 sed -i "s/^VRP2=.*/VRP2=\"${VRP2:-10-VRP2}\"/" /usr/local/autofan/autofan.py
 sed -i "s/^StorageBatt=.*/StorageBatt=\"${StorageBatt:-10-Storage Batt}\"/" /usr/local/autofan/autofan.py
+sed -i "s/^HDCntlrZone=.*/HDCntlrZone=\"${HDCntlrZone:-10-HD Cntlr Zone}\"/" /usr/local/autofan/autofan.py
+
 
 #IPMI Test
 ipmitool -I lanplus -H "$ILOIP" -U "$IPMIUSER" -P "$IPMIPW" chassis status
