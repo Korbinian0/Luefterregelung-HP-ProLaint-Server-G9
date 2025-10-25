@@ -23,7 +23,7 @@ mkdir -p /usr/local/autofan
 cp autofan.py /usr/local/autofan/autofan.py
 chmod +x /usr/local/autofan/autofan.py
 
-# Prompt for access data
+# Prompt for access data and IPMI settings
 read -p "Please enter iLO username: " USERNAME
 read -sp "Please enter iLO password: " PASSWORD
 echo
@@ -33,20 +33,37 @@ echo
 read -p "Please enter IPMI Username: " IPMIUSER
 read -sp "Please enter IPMI Passwost: " IPMIPW
 echo
+read -p "Please set the IPMI Chipset name (default: '10-Chipset'): "
+read -p "Please set the IPMI HD Max name (default: '10-HD Max'): "
+read -p "Please set the IPMI HD Controller name (default: '10-HD Controller'): "
+read -p "Please set the IPMI ILO Zone name (default: '10-ILO Zone'): "
+read -p "Please set the IPMI Battery Zone name (default: '10-Battery Zone'): "
+read -p "Please set the IPMI VRP1 name (default: '10-VRP1'): "
+read -p "Please set the IPMI VRP2 name (default: '10-VRP2'): "
+read -p "Please set the IPMI Storage Batt name (default: '10-Storage Batt'): "
+echo
 
 # Replace placeholders in autofan.py
 sed -i "s/^USERNAME=.*/USERNAME=\"$USERNAME\"/" /usr/local/autofan/autofan.py
-sed -i "s/^USERNAME=.*/USERNAME=\"$USERNAME\"/" /root/autofan-test.py
+sed -i "s/^USERNAME=.*/USERNAME=\"$USERNAME\"/" /root//autofan/autofan-test.py
 sed -i "s/^PASSWORD=.*/PASSWORD=\"$PASSWORD\"/" /usr/local/autofan/autofan.py
-sed -i "s/^PASSWORD=.*/PASSWORD=\"$PASSWORD\"/" /root/autofan-test.py
+sed -i "s/^PASSWORD=.*/PASSWORD=\"$PASSWORD\"/" /root/autofan/autofan-test.py
 sed -i "s/^ILOIP=.*/ILOIP=\"$ILOIP\"/" /usr/local/autofan/autofan.py
-sed -i "s/^ILOIP=.*/ILOIP=\"$ILOIP\"/" /root/autofan-test.py
+sed -i "s/^ILOIP=.*/ILOIP=\"$ILOIP\"/" /root//autofan/autofan-test.py
 sed -i "s/^SSHOPTS=.*/SSHOPTS=\"$SSHOPTS\"/" /usr/local/autofan/autofan.py
-sed -i "s/^SSHOPTS=.*/SSHOPTS=\"$SSHOPTS\"/" /root/autofan-test.py
+sed -i "s/^SSHOPTS=.*/SSHOPTS=\"$SSHOPTS\"/" /root/autofan/autofan-test.py
 sed -i "s/^IPMIUSER=.*/IPMIUSER=\"$IPMIUSER\"/" /usr/local/autofan/autofan.py
-sed -i "s/^IPMIUSER=.*/IPMIUSER=\"$IPMIUSER\"/" /root/autofan-test.py
 sed -i "s/^IPMIPW=.*/IPMIPW=\"$IPMIPW\"/" /usr/local/autofan/autofan.py
-sed -i "s/^IPMIPW=.*/IPMIPW=\"$IPMIPW\"/" /root/autofan-test.py
+sed -i "s/^Chipset=.*/Chipset=\"${Chipset:-10-Chipset}\"/" /usr/local/autofan/autofan.py
+sed -i "s/^HDMax=.*/HDMax=\"${HDMax:-10-HD Max}\"/" /usr/local/autofan/autofan.py
+sed -i "s/^HDController=.*/HDController=\"${HDController:-10-HD Controller}\"/" /usr/local/autofan/autofan.py
+sed -i "s/^ILOZone=.*/ILOZone=\"${ILOZone:-10-ILO Zone}\"/" /usr/local/autofan/autofan.py
+sed -i "s/^Batteryzone=.*/Batteryzone=\"${Batteryzone:-10-Battery Zone}\"/" /usr/local/autofan/autofan.py
+sed -i "s/^VRP1=.*/VRP1=\"${VRP1:-10-VRP1}\"/" /usr/local/autofan/autofan.py
+sed -i "s/^VRP2=.*/VRP2=\"${VRP2:-10-VRP2}\"/" /usr/local/autofan/autofan.py
+sed -i "s/^StorageBatt=.*/StorageBatt=\"${StorageBatt:-10-Storage Batt}\"/" /usr/local/autofan/autofan.py
+sed -i "s/^HDCntlrZone=.*/HDCntlrZone=\"${HDCntlrZone:-10-HD Cntlr Zone}\"/" /usr/local/autofan/autofan.py
+
 
 #IPMI Test
 ipmitool -I lanplus -H "$ILOIP" -U "$IPMIUSER" -P "$IPMIPW" chassis status
@@ -73,7 +90,6 @@ EOL
 systemctl daemon-reload
 systemctl enable autofan.service
 systemctl start autofan.service
-systemctl status autofan.service
 
 # Set permissions for the configuration file
 chmod 600 /usr/local/autofan/*

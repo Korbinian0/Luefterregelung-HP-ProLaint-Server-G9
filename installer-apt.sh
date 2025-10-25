@@ -54,13 +54,13 @@ echo
 
 # Replace placeholders in autofan.py
 sed -i "s/^USERNAME=.*/USERNAME=\"$USERNAME\"/" /usr/local/autofan/autofan.py
-sed -i "s/^USERNAME=.*/USERNAME=\"$USERNAME\"/" /root/autofan-test.py
+sed -i "s/^USERNAME=.*/USERNAME=\"$USERNAME\"/" /root//autofan/autofan-test.py
 sed -i "s/^PASSWORD=.*/PASSWORD=\"$PASSWORD\"/" /usr/local/autofan/autofan.py
-sed -i "s/^PASSWORD=.*/PASSWORD=\"$PASSWORD\"/" /root/autofan-test.py
+sed -i "s/^PASSWORD=.*/PASSWORD=\"$PASSWORD\"/" /root/autofan/autofan-test.py
 sed -i "s/^ILOIP=.*/ILOIP=\"$ILOIP\"/" /usr/local/autofan/autofan.py
-sed -i "s/^ILOIP=.*/ILOIP=\"$ILOIP\"/" /root/autofan-test.py
+sed -i "s/^ILOIP=.*/ILOIP=\"$ILOIP\"/" /root//autofan/autofan-test.py
 sed -i "s/^SSHOPTS=.*/SSHOPTS=\"$SSHOPTS\"/" /usr/local/autofan/autofan.py
-sed -i "s/^SSHOPTS=.*/SSHOPTS=\"$SSHOPTS\"/" /root/autofan-test.py
+sed -i "s/^SSHOPTS=.*/SSHOPTS=\"$SSHOPTS\"/" /root/autofan/autofan-test.py
 sed -i "s/^IPMIUSER=.*/IPMIUSER=\"$IPMIUSER\"/" /usr/local/autofan/autofan.py
 sed -i "s/^IPMIPW=.*/IPMIPW=\"$IPMIPW\"/" /usr/local/autofan/autofan.py
 sed -i "s/^Chipset=.*/Chipset=\"${Chipset:-10-Chipset}\"/" /usr/local/autofan/autofan.py
@@ -98,7 +98,6 @@ EOL
 systemctl daemon-reload
 systemctl enable autofan.service
 systemctl start autofan.service
-systemctl status autofan.service
 
 # Set permissions for the configuration file
 chmod 600 /usr/local/autofan/*
