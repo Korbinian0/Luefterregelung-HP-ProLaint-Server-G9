@@ -172,128 +172,6 @@ if temp_2 > TEMP_11:
 
 # Setting fan speed via SSH commands to iLO
 
-# CPU 1
-if temp_1 > TEMP_11:
-    for i in range(3, 7):
-        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_11}'"
-        subprocess.call(cmd, shell=True)
-
-elif temp_1 > TEMP_10:
-    for i in range(3, 7):
-        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_10}'"
-        subprocess.call(cmd, shell=True)
-
-elif temp_1 > TEMP_09:
-    for i in range(3, 7):
-        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_09}'"
-        subprocess.call(cmd, shell=True)
-
-elif temp_1 > TEMP_08:
-    for i in range(3, 7):
-        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_08}'"
-        subprocess.call(cmd, shell=True)   
-
-elif temp_1 > TEMP_07:
-    for i in range(3, 7):
-        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_07}'"
-        subprocess.call(cmd, shell=True)
-
-elif temp_1 > TEMP_06:
-    for i in range(3, 7):
-        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_06}'"
-        subprocess.call(cmd, shell=True)
-
-elif temp_1 > TEMP_05:
-    for i in range(3, 7):
-        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_05}'"
-        subprocess.call(cmd, shell=True)
-
-elif temp_1 > TEMP_04:
-    for i in range(3, 7):
-        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_04}'"
-        subprocess.call(cmd, shell=True)
-
-elif temp_1 > TEMP_03:
-    for i in range(3, 7):
-        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_03}'"
-        subprocess.call(cmd, shell=True)
-
-elif temp_1 > TEMP_02:
-    for i in range(3, 7):
-        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_02}'"
-        subprocess.call(cmd, shell=True)
-
-elif temp_1 > TEMP_01:
-    for i in range(3, 7):
-        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_01}'"
-        subprocess.call(cmd, shell=True)
-
-else:
-    for i in range(3, 7):
-        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_00}'"
-        subprocess.call(cmd, shell=True)
-
-# CPU 2
-if temp_2 > TEMP_11:
-    for i in range(0, 3):
-        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_11}'"
-        subprocess.call(cmd, shell=True)
-
-elif temp_2 > TEMP_10:
-    for i in range(0, 3):
-        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS}{USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_10}'"
-        subprocess.call(cmd, shell=True)
-
-elif temp_2 > TEMP_09:
-    for i in range(0, 3):
-        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_09}'"
-        subprocess.call(cmd, shell=True)
-
-elif temp_2 > TEMP_08:
-    for i in range(0, 3):
-        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_08}'"
-        subprocess.call(cmd, shell=True)
-
-elif temp_2 > TEMP_07:
-    for i in range(0, 3):
-        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_07}'"
-        subprocess.call(cmd, shell=True)
-
-elif temp_2 > TEMP_06:
-    for i in range(0, 3):
-        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_06}'"
-        subprocess.call(cmd, shell=True)
-
-elif temp_2 > TEMP_05:
-    for i in range(0, 3):
-        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_05}'"
-        subprocess.call(cmd, shell=True)
-
-elif temp_2 > TEMP_04:
-    for i in range(0, 3):
-        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_04}'"
-        subprocess.call(cmd, shell=True)
-
-elif temp_2 > TEMP_03:
-    for i in range(0, 3):
-        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_03}'"
-        subprocess.call(cmd, shell=True)
-
-elif temp_2 > TEMP_02:
-    for i in range(0, 3):
-        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_02}'"
-        subprocess.call(cmd, shell=True)
-
-elif temp_2 > TEMP_01:
-    for i in range(0, 3):
-        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_01}'"
-        subprocess.call(cmd, shell=True)
-
-else:
-    for i in range(0, 3):
-        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_00}'"
-        subprocess.call(cmd, shell=True)
-
 # Additional cooling if chipset temperature is too high and CPU 1 temperature is low
 if chipset_temp is not None and temp_1 is not None and chipset_temp >= TEMP_11 and temp_1 <= TEMP_11:
     for i in range(5, 7):
@@ -843,3 +721,125 @@ else:
         cmd = f"ssshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan ü {i} max {FANSPEED_00}'"
         subprocess.call(cmd, shell=True)
 
+
+# CPU 1
+if temp_1 > TEMP_11:
+    for i in range(3, 7):
+        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_11}'"
+        subprocess.call(cmd, shell=True)
+
+elif temp_1 > TEMP_10:
+    for i in range(3, 7):
+        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_10}'"
+        subprocess.call(cmd, shell=True)
+
+elif temp_1 > TEMP_09:
+    for i in range(3, 7):
+        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_09}'"
+        subprocess.call(cmd, shell=True)
+
+elif temp_1 > TEMP_08:
+    for i in range(3, 7):
+        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_08}'"
+        subprocess.call(cmd, shell=True)   
+
+elif temp_1 > TEMP_07:
+    for i in range(3, 7):
+        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_07}'"
+        subprocess.call(cmd, shell=True)
+
+elif temp_1 > TEMP_06:
+    for i in range(3, 7):
+        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_06}'"
+        subprocess.call(cmd, shell=True)
+
+elif temp_1 > TEMP_05:
+    for i in range(3, 7):
+        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_05}'"
+        subprocess.call(cmd, shell=True)
+
+elif temp_1 > TEMP_04:
+    for i in range(3, 7):
+        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_04}'"
+        subprocess.call(cmd, shell=True)
+
+elif temp_1 > TEMP_03:
+    for i in range(3, 7):
+        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_03}'"
+        subprocess.call(cmd, shell=True)
+
+elif temp_1 > TEMP_02:
+    for i in range(3, 7):
+        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_02}'"
+        subprocess.call(cmd, shell=True)
+
+elif temp_1 > TEMP_01:
+    for i in range(3, 7):
+        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_01}'"
+        subprocess.call(cmd, shell=True)
+
+else:
+    for i in range(3, 7):
+        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_00}'"
+        subprocess.call(cmd, shell=True)
+
+# CPU 2
+if temp_2 > TEMP_11:
+    for i in range(0, 3):
+        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_11}'"
+        subprocess.call(cmd, shell=True)
+
+elif temp_2 > TEMP_10:
+    for i in range(0, 3):
+        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS}{USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_10}'"
+        subprocess.call(cmd, shell=True)
+
+elif temp_2 > TEMP_09:
+    for i in range(0, 3):
+        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_09}'"
+        subprocess.call(cmd, shell=True)
+
+elif temp_2 > TEMP_08:
+    for i in range(0, 3):
+        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_08}'"
+        subprocess.call(cmd, shell=True)
+
+elif temp_2 > TEMP_07:
+    for i in range(0, 3):
+        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_07}'"
+        subprocess.call(cmd, shell=True)
+
+elif temp_2 > TEMP_06:
+    for i in range(0, 3):
+        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_06}'"
+        subprocess.call(cmd, shell=True)
+
+elif temp_2 > TEMP_05:
+    for i in range(0, 3):
+        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_05}'"
+        subprocess.call(cmd, shell=True)
+
+elif temp_2 > TEMP_04:
+    for i in range(0, 3):
+        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_04}'"
+        subprocess.call(cmd, shell=True)
+
+elif temp_2 > TEMP_03:
+    for i in range(0, 3):
+        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_03}'"
+        subprocess.call(cmd, shell=True)
+
+elif temp_2 > TEMP_02:
+    for i in range(0, 3):
+        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_02}'"
+        subprocess.call(cmd, shell=True)
+
+elif temp_2 > TEMP_01:
+    for i in range(0, 3):
+        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_01}'"
+        subprocess.call(cmd, shell=True)
+
+else:
+    for i in range(0, 3):
+        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_00}'"
+        subprocess.call(cmd, shell=True)
