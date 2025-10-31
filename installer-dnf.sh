@@ -21,14 +21,14 @@ cd Luefterregelung-HP-ProLaint-Server-G9
 
 # Move the reinstaller-update.sh script to /root/ and make it executable
 mkdir -p /root/autofan
-cp autofan-test.py /root/autofan/autofan-test.py
-cp reinstaller-update-dnf.sh /root/autofan/reinstaller-update-dnf.sh
+cp /root/Luefterregelung-HP-ProLaint-Server-G9/autofan-test.py /root/autofan/autofan-test.py
+cp /root/Luefterregelung-HP-ProLaint-Server-G9/reinstaller-update-dnf.sh /root/autofan/reinstaller-update-dnf.sh
 chmod +x /root/autofan/reinstaller-update-dnf.sh
 chmod +x /root/autofan/autofan-test.py
 
 # Move the autofan.py script to /usr/local/autofan and make it executable
 mkdir -p /usr/local/autofan
-cp autofan.py /usr/local/autofan/autofan.py
+cp /root/Luefterregelung-HP-ProLaint-Server-G9/autofan.py /usr/local/autofan/autofan.py
 chmod +x /usr/local/autofan/autofan.py
 
 # Prompt for access data and IPMI settings
