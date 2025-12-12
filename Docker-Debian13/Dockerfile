@@ -7,7 +7,7 @@
 
 FROM debian:trixie
 
-LABEL maintainer="Korbinian Musch korbinian.musch@au-musch.de"
+LABEL maintainer="Korbinian Musch korbinian.musch@nandlnet.de"
 LABEL description="Fan control HP ProLiant Server G9 with modified ILO4 firmware"
 LABEL version="2025-10-08"
 
