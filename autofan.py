@@ -141,8 +141,8 @@ if all(sensor in globals() for sensor in ['Chipset_TEMP', 'HD_Max_TEMP', 'ILO_Zo
     Batteryzone_temp = globals()['Batter_Zonr_TEMP']
     VRP1_temp = globals()['VRP1_TEMP']
     VRP2_temp = globals()['VRP2_TEMP']
-    StorageBatt_temp = ()['Storage_Batt_TEMP']
-    HDCntlrZone_temp = ()['HD_Cntlr_Zone']
+    StorageBatt_temp = globals()['Storage_Batt_TEMP']
+    HDCntlrZone_temp = globals()['HD_Cntlr_Zone']
 
 # Print Temp 
 print=("CPU 1:", temp_1, "°C")		                    #CPU 1 Temp print
