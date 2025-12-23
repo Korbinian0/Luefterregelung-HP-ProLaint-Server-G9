@@ -12,8 +12,6 @@ import time
 PASSWORD="PASSWORT"
 USERNAME="USERNAME"
 ILOIP="XXX.XXX.XXX.XXX"
-IPMIUSER="IPMIUSER"
-IPMIPW="IPMIPW"
 # Encryption routine for SSH connection
 SSHOPTS="SSHOPTS"
 
@@ -89,7 +87,7 @@ temp_2 = get_package_temp("coretemp-isa-0001", 1)
 
 # Read IPMI temperature 
 def get_sensor_data():
-    command = ['ipmitool', '-I', 'lanplus', '-H', ILOIP, '-U', IPMIUSER, '-P', IPMIPW, 'sensor']
+    command = ['ipmitool', 'sensor']
     result = subprocess.run(command, capture_output=True, text=True)
     
     if result.returncode != 0:
@@ -234,125 +232,39 @@ else:
         subprocess.call(cmd, shell=True)
 
 # Additional cooling if HD Controller temperature is too high and CPU 1 temperature is low
-if HDController_temp is not None and temp_1 is not None and HDCntlrZone_temp >= TEMP_11 and temp_1 <= TEMP_11:
+if HDController_temp is not None and temp_1 is not None and HDCntlrZone_temp >= "90" and temp_1 <= TEMP_11:
     for i in range(3, 5):
         cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_11}"
         subprocess.call(cmd, shell=True)
 
-elif HDController_temp is not None and temp_1 is not None and HDCntlrZone_temp >= TEMP_10 and temp_1 <= TEMP_10:
+elif HDController_temp is not None and temp_1 is not None and HDCntlrZone_temp >= "85" and temp_1 <= TEMP_10:
     for i in range(3, 5):
         cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_10}'"
         subprocess.call(cmd, shell=True)
 
-elif HDController_temp is not None and temp_1 is not None and HDCntlrZone_temp >= TEMP_09 and temp_1 <= TEMP_09:
+elif HDController_temp is not None and temp_1 is not None and HDCntlrZone_temp >= "80" and temp_1 <= TEMP_09:
     for i in range(3, 5):
         cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_09}'"
         subprocess.call(cmd, shell=True)
 
-elif HDController_temp is not None and temp_1 is not None and HDCntlrZone_temp >= TEMP_08 and temp_1 <= TEMP_08:
-    for i in range(3, 5):
-        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_08}'"
-        subprocess.call(cmd, shell=True)
-
-elif HDController_temp is not None and temp_1 is not None and HDCntlrZone_temp >= TEMP_07 and temp_1 <= TEMP_07:
-    for i in range(3, 5):
-        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_07}'"
-        subprocess.call(cmd, shell=True)
-
-elif HDController_temp is not None and temp_1 is not None and HDCntlrZone_temp >= TEMP_06 and temp_1 <= TEMP_06:
-    for i in range(3, 5):
-        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_06}'"
-        subprocess.call(cmd, shell=True)
-
-elif HDController_temp is not None and temp_1 is not None and HDCntlrZone_temp >= TEMP_05 and temp_1 <= TEMP_05:
-    for i in range(3, 5):
-        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_05}'"
-        subprocess.call(cmd, shell=True)
-
-elif HDController_temp is not None and temp_1 is not None and HDCntlrZone_temp >= TEMP_04 and temp_1 <= TEMP_04:
-    for i in range(3, 5):
-        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_04}'"
-        subprocess.call(cmd, shell=True)
-
-elif HDController_temp is not None and temp_1 is not None and HDCntlrZone_temp >= TEMP_03 and temp_1 <= TEMP_03:
-    for i in range(3, 5):
-        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_03}'"
-        subprocess.call(cmd, shell=True)
-
-elif HDController_temp is not None and temp_1 is not None and HDCntlrZone_temp >= TEMP_02 and temp_1 <= TEMP_02:
-    for i in range(3, 5):
-        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_02}'"
-        subprocess.call(cmd, shell=True)
-
-elif HDController_temp is not None and temp_1 is not None and HDCntlrZone_temp >= TEMP_01 and temp_1 <= TEMP_01:
-    for i in range(3, 5):
-        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_01}'"
-        subprocess.call(cmd, shell=True)
-
 else:
     for i in range(3, 5):
-        cmd = f"ssshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan ü {i} max {FANSPEED_00}'"
+        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_00}'"
         subprocess.call(cmd, shell=True)
 
 # Additional cooling if HD Max temperature is too high and CPU 1 temperature is low
-if hdmax_temp is not None and temp_1 is not None and hdmax_temp >= TEMP_11 and temp_1 <= TEMP_11:
-    for i in range(0, 7):
-        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_11}'"
-        subprocess.call(cmd, shell=True)
-
-elif hdmax_temp is not None and temp_1 is not None and hdmax_temp >= TEMP_10 and temp_1 <= TEMP_10:
-    for i in range(0, 7):
-        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_10}'"
-        subprocess.call(cmd, shell=True)
-
-elif hdmax_temp is not None and temp_1 is not None and hdmax_temp >= TEMP_09 and temp_1 <= TEMP_09:
-    for i in range(0, 7):
-        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_09}'"
-        subprocess.call(cmd, shell=True)
-
-elif hdmax_temp is not None and temp_1 is not None and hdmax_temp >= TEMP_08 and temp_1 <= TEMP_08:
-    for i in range(0, 7):
-        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_08}'"
-        subprocess.call(cmd, shell=True)
-
-elif hdmax_temp is not None and temp_1 is not None and hdmax_temp >= TEMP_07 and temp_1 <= TEMP_07:
-    for i in range(0, 7):
-        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_07}'"
-        subprocess.call(cmd, shell=True)
-
-elif hdmax_temp is not None and temp_1 is not None and hdmax_temp >= TEMP_06 and temp_1 <= TEMP_06:
-    for i in range(0, 7):
-        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_06}'"
-        subprocess.call(cmd, shell=True)
-
-elif hdmax_temp is not None and temp_1 is not None and hdmax_temp >= TEMP_05 and temp_1 <= TEMP_05:
+if hdmax_temp is not None and temp_1 is not None and hdmax_temp >= "50" and temp_1 <= TEMP_11:
     for i in range(0, 7):
         cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_05}'"
         subprocess.call(cmd, shell=True)
 
-elif hdmax_temp is not None and temp_1 is not None and hdmax_temp >= TEMP_04 and temp_1 <= TEMP_04:
+elif hdmax_temp is not None and temp_1 is not None and hdmax_temp >= "45" and temp_1 <= TEMP_10:
     for i in range(0, 7):
         cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_04}'"
         subprocess.call(cmd, shell=True)
-
-elif hdmax_temp is not None and temp_1 is not None and hdmax_temp >= TEMP_03 and temp_1 <= TEMP_03:
-    for i in range(0, 7):
-        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_03}'"
-        subprocess.call(cmd, shell=True)
-
-elif hdmax_temp is not None and temp_1 is not None and hdmax_temp >= TEMP_02 and temp_1 <= TEMP_02:
-    for i in range(0, 7):
-        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_02}'"
-        subprocess.call(cmd, shell=True)
-
-elif hdmax_temp is not None and temp_1 is not None and hdmax_temp >= TEMP_01 and temp_1 <= TEMP_01:
-    for i in range(0, 7):
-        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_01}'"
-        subprocess.call(cmd, shell=True)
-
 else:
     for i in range(0, 7):
-        cmd = f"ssshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan ü {i} max {FANSPEED_00}'"
+        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_00}'"
         subprocess.call(cmd, shell=True)
 
 # Additional cooling if ILO Zone temperature is too high and CPU 1 temperature is low
@@ -413,7 +325,7 @@ elif ilozone_temp is not None and temp_1 is not None and ilozone_temp >= TEMP_01
 
 else:
     for i in range(3, 6):
-        cmd = f"ssshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan ü {i} max {FANSPEED_00}'"
+        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_00}'"
         subprocess.call(cmd, shell=True)
 
 # Additional cooling if Battery Zone temperature is too high and CPU 1 temperature is low
@@ -474,7 +386,7 @@ elif Batteryzone_temp is not None and temp_1 is not None and Batteryzone_temp >=
 
 else:
     for i in range(2, 4):
-        cmd = f"ssshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan ü {i} max {FANSPEED_00}'"
+        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_00}'"
         subprocess.call(cmd, shell=True)
 
 # Additional cooling if VRP1 temperature is too high and CPU 1 temperature is low
@@ -535,7 +447,7 @@ elif VRP1_temp is not None and temp_1 is not None and VRP1_temp >= TEMP_01 and t
 
 else:
     for i in range(4, 6):
-        cmd = f"ssshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan ü {i} max {FANSPEED_00}'"
+        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_00}'"
         subprocess.call(cmd, shell=True)
 
 # Additional cooling if VRP2 temperature is too high and CPU 2 temperature is low
@@ -596,7 +508,7 @@ elif VRP2_temp is not None and temp_2 is not None and VRP2_temp >= TEMP_01 and t
 
 else:
     for i in range(0, 6):
-        cmd = f"ssshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan ü {i} max {FANSPEED_00}'"
+        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_00}'"
         subprocess.call(cmd, shell=True)
 
 # Additonal cooling if Storage Batt temperature is too high and CPU 1 temperature is low
@@ -657,7 +569,7 @@ elif StorageBatt_temp is not None and temp_1 is not None and StorageBatt_temp >=
 
 else:
     for i in range(4, 6):
-        cmd = f"ssshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan ü {i} max {FANSPEED_00}'"
+        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_00}'"
         subprocess.call(cmd, shell=True)
 
 # Additonal cooling if HD Cntrl Zone temperature is too high and CPU 1 temperature is low
@@ -718,7 +630,7 @@ elif HDCntlrZone_temp is not None and temp_1 is not None and HDCntlrZone_temp >=
 
 else:
     for i in range(4, 7):
-        cmd = f"ssshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan ü {i} max {FANSPEED_00}'"
+        cmd = f"sshpass -p {PASSWORD} ssh {SSHOPTS} {USERNAME}@{ILOIP} 'fan p {i} max {FANSPEED_00}'"
         subprocess.call(cmd, shell=True)
 
 

@@ -23,24 +23,22 @@ mkdir -p /usr/local/autofan
 cp /root/Luefterregelung-HP-ProLaint-Server-G9/autofan.py /usr/local/autofan/autofan.py
 chmod +x /usr/local/autofan/autofan.py
 
-# Prompt for access data and IPMI settings
+# Prompt for access data
 read -p "Please enter iLO username: " USERNAME
 read -sp "Please enter iLO password: " PASSWORD
 echo
 read -p "Please enter iLO IP address: " ILOIP
 read -p "Please enter SSH options (leave blank for default): " SSHOPTS
 echo
-read -p "Please enter IPMI Username: " IPMIUSER
-read -sp "Please enter IPMI Passwost: " IPMIPW
-echo
 read -p "Please set the IPMI Chipset name (default: '10-Chipset'): "
-read -p "Please set the IPMI HD Max name (default: '10-HD Max'): "
-read -p "Please set the IPMI HD Controller name (default: '10-HD Controller'): "
-read -p "Please set the IPMI ILO Zone name (default: '10-ILO Zone'): "
-read -p "Please set the IPMI Battery Zone name (default: '10-Battery Zone'): "
-read -p "Please set the IPMI VRP1 name (default: '10-VRP1'): "
-read -p "Please set the IPMI VRP2 name (default: '10-VRP2'): "
-read -p "Please set the IPMI Storage Batt name (default: '10-Storage Batt'): "
+read -p "Please set the IPMI HD Max name (default: '08-HD Max'): "
+read -p "Please set the IPMI HD Controller name (default: '24-HD Controller'): "
+read -p "Please set the IPMI ILO Zone name (default: '30-ILO Zone'): "
+read -p "Please set the IPMI Battery Zone name (default: '29-Battery Zone'): "
+read -p "Please set the IPMI VRP1 name (default: '13-VR P1'): "
+read -p "Please set the IPMI VRP2 name (default: '14-VR P2'): "
+read -p "Please set the IPMI Storage Batt name (default: '36-Storage Batt'): "
+read -p "Please set the IPMI HD Cntlr Zone name (default: '34-HD Cntrl Zone'): "
 echo
 
 # Replace placeholders in autofan.py
@@ -52,20 +50,18 @@ sed -i "s/^ILOIP=.*/ILOIP=\"$ILOIP\"/" /usr/local/autofan/autofan.py
 sed -i "s/^ILOIP=.*/ILOIP=\"$ILOIP\"/" /root//autofan/autofan-test.py
 sed -i "s/^SSHOPTS=.*/SSHOPTS=\"$SSHOPTS\"/" /usr/local/autofan/autofan.py
 sed -i "s/^SSHOPTS=.*/SSHOPTS=\"$SSHOPTS\"/" /root/autofan/autofan-test.py
-sed -i "s/^IPMIUSER=.*/IPMIUSER=\"$IPMIUSER\"/" /usr/local/autofan/autofan.py
-sed -i "s/^IPMIPW=.*/IPMIPW=\"$IPMIPW\"/" /usr/local/autofan/autofan.py
 sed -i "s/^Chipset=.*/Chipset=\"${Chipset:-10-Chipset}\"/" /usr/local/autofan/autofan.py
-sed -i "s/^HDMax=.*/HDMax=\"${HDMax:-10-HD Max}\"/" /usr/local/autofan/autofan.py
-sed -i "s/^HDController=.*/HDController=\"${HDController:-10-HD Controller}\"/" /usr/local/autofan/autofan.py
-sed -i "s/^ILOZone=.*/ILOZone=\"${ILOZone:-10-ILO Zone}\"/" /usr/local/autofan/autofan.py
-sed -i "s/^Batteryzone=.*/Batteryzone=\"${Batteryzone:-10-Battery Zone}\"/" /usr/local/autofan/autofan.py
-sed -i "s/^VRP1=.*/VRP1=\"${VRP1:-10-VRP1}\"/" /usr/local/autofan/autofan.py
-sed -i "s/^VRP2=.*/VRP2=\"${VRP2:-10-VRP2}\"/" /usr/local/autofan/autofan.py
-sed -i "s/^StorageBatt=.*/StorageBatt=\"${StorageBatt:-10-Storage Batt}\"/" /usr/local/autofan/autofan.py
-sed -i "s/^HDCntlrZone=.*/HDCntlrZone=\"${HDCntlrZone:-10-HD Cntlr Zone}\"/" /usr/local/autofan/autofan.py
+sed -i "s/^HDMax=.*/HDMax=\"${HDMax:-08-HD Max}\"/" /usr/local/autofan/autofan.py
+sed -i "s/^HDController=.*/HDController=\"${HDController:-24-HD Controller}\"/" /usr/local/autofan/autofan.py
+sed -i "s/^ILOZone=.*/ILOZone=\"${ILOZone:-30-ILO Zone}\"/" /usr/local/autofan/autofan.py
+sed -i "s/^Batteryzone=.*/Batteryzone=\"${Batteryzone:-29-Battery Zone}\"/" /usr/local/autofan/autofan.py
+sed -i "s/^VRP1=.*/VRP1=\"${VRP1:-13-VR P1}\"/" /usr/local/autofan/autofan.py
+sed -i "s/^VRP2=.*/VRP2=\"${VRP2:-14-VR P2}\"/" /usr/local/autofan/autofan.py
+sed -i "s/^StorageBatt=.*/StorageBatt=\"${StorageBatt:-36-Storage Batt}\"/" /usr/local/autofan/autofan.py
+sed -i "s/^HDCntlrZone=.*/HDCntlrZone=\"${HDCntlrZone:-34-HD Cntlr Zone}\"/" /usr/local/autofan/autofan.py
 
 #IPMI Test
-ipmitool -I lanplus -H "$ILOIP" -U "$IPMIUSER" -P "$IPMIPW" chassis status
+ipmitool sensor list
 
 # Create a systemd service file for the autofan script
 cat <<EOL > /etc/systemd/system/autofan.service
